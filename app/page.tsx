@@ -130,7 +130,7 @@ export default function Home() {
             Built for the people who run the floor.
           </h2>
           <p className="mt-8 max-w-3xl text-lg text-spark-text-muted leading-relaxed">
-            Every shift has moments that can make or break a guest's experience.
+            Restaurants are the first AI-native physical experience — every shift is full of high-frequency decisions that shape whether guests come back.
           </p>
 
           <div className="mt-16 space-y-4 sm:space-y-5 max-w-4xl">
