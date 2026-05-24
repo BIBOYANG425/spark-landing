@@ -18,7 +18,7 @@ export default function Home() {
         <div className="max-w-7xl mx-auto grid gap-16 lg:grid-cols-[1.1fr_1fr] lg:gap-12 lg:items-center">
           <div>
             <h1 className="font-display text-spark-text text-[44px] sm:text-[68px] md:text-[84px] lg:text-[88px] xl:text-[104px]">
-              Physical experiences. E-commerce speed.
+              Make physical stores think in real time.
             </h1>
             <p className="mt-8 max-w-2xl text-lg sm:text-xl text-spark-text-muted leading-relaxed">
               Online stores make decisions in real time. Your restaurant floor can too.
