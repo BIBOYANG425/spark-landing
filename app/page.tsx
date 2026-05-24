@@ -17,14 +17,14 @@ export default function Home() {
       <section className="w-full px-6 sm:px-10 pt-8 pb-24 sm:pt-12 sm:pb-32">
         <div className="max-w-7xl mx-auto grid gap-16 lg:grid-cols-[1.1fr_1fr] lg:gap-12 lg:items-center">
           <div>
-            <h1 className="font-display text-spark-text text-[44px] sm:text-[68px] md:text-[84px] lg:text-[88px] xl:text-[104px]">
+            <h1 className="animate-fade-up font-display text-spark-text text-[48px] sm:text-[72px] md:text-[92px] lg:text-[96px] xl:text-[116px]">
               Make physical stores think in real time.
             </h1>
-            <p className="mt-8 max-w-2xl text-lg sm:text-xl text-spark-text-muted leading-relaxed">
+            <p className="animate-fade-up delay-100 mt-8 max-w-2xl text-lg sm:text-xl text-spark-text-muted leading-relaxed">
               Online stores make decisions in real time. Your restaurant floor can too.
             </p>
 
-            <div className="mt-12 max-w-2xl space-y-4">
+            <div className="animate-fade-up delay-200 mt-12 max-w-2xl space-y-4">
               <Stair
                 label="Today"
                 body="Know what's happening on your floor the moment it happens."
@@ -39,7 +39,7 @@ export default function Home() {
               />
             </div>
 
-            <div className="mt-12 flex flex-wrap gap-3">
+            <div className="animate-fade-up delay-300 mt-12 flex flex-wrap gap-3">
               <a href="#cta" className="btn-spark-pill">
                 Talk to us
               </a>
@@ -49,7 +49,7 @@ export default function Home() {
             </div>
           </div>
 
-          <div className="lg:max-w-[520px] lg:justify-self-end w-full">
+          <div className="animate-fade-up delay-200 lg:max-w-[520px] lg:justify-self-end w-full">
             <FloorPanel />
           </div>
         </div>
@@ -133,7 +133,7 @@ export default function Home() {
             Restaurants are the first AI-native physical experience — every shift is full of high-frequency decisions that shape whether guests come back. Every one of these is something an online store would handle automatically.
           </p>
 
-          <div className="mt-16 space-y-4 sm:space-y-5 max-w-4xl">
+          <div className="mt-16 max-w-4xl border-b border-spark-dark/15 pb-4">
             <UseCaseLine text="A customer waits too long." />
             <UseCaseLine text="A queue forms at the entrance." />
             <UseCaseLine text="Part of the floor has no coverage." />
@@ -177,10 +177,10 @@ export default function Home() {
           <h2 className="font-display text-4xl sm:text-6xl md:text-7xl max-w-5xl text-white">
             Every physical experience runs like an online one.
           </h2>
-          <p className="mt-12 max-w-3xl text-lg leading-relaxed text-white/80">
+          <p className="mt-12 max-w-3xl text-lg leading-relaxed text-white/70">
             Restaurants are the start. The same gap between physical and digital exists in retail, hospitality, fitness, healthcare. Every physical experience deserves the decision speed that online businesses already have. Spark is how that happens — first with your team acting on it, eventually with robots doing it automatically.
           </p>
-          <p className="mt-12 max-w-3xl font-display text-3xl sm:text-4xl md:text-5xl text-spark-lime">
+          <p className="mt-16 font-display text-5xl sm:text-7xl md:text-8xl text-spark-lime max-w-4xl">
             The worker changes. The brain stays the same.
           </p>
         </div>
@@ -328,8 +328,11 @@ function Stair({ label, body }: { label: string; body: string }) {
 
 function UseCaseLine({ text }: { text: string }) {
   return (
-    <p className="font-display text-spark-text text-2xl sm:text-3xl md:text-4xl">
-      {text}
-    </p>
+    <div className="flex items-baseline gap-4 border-t border-spark-dark/15 pt-4 pb-1">
+      <span className="text-spark-dark/40 text-sm font-bold flex-shrink-0">→</span>
+      <p className="font-display text-spark-text text-2xl sm:text-3xl md:text-4xl">
+        {text}
+      </p>
+    </div>
   );
 }
