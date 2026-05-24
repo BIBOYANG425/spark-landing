@@ -14,32 +14,17 @@ export default function Home() {
         </a>
       </header>
 
-      <section className="w-full px-6 sm:px-10 pt-8 pb-24 sm:pt-12 sm:pb-32">
-        <div className="max-w-7xl mx-auto grid gap-16 lg:grid-cols-[1.1fr_1fr] lg:gap-12 lg:items-center">
-          <div>
-            <h1 className="animate-fade-up font-display text-spark-text text-[48px] sm:text-[72px] md:text-[92px] lg:text-[96px] xl:text-[116px]">
+      <section className="w-full">
+        {/* Headline zone */}
+        <div className="px-6 sm:px-10 pt-8 sm:pt-12 pb-10 sm:pb-14">
+          <div className="max-w-7xl mx-auto">
+            <h1 className="animate-fade-up font-display text-spark-text text-[48px] sm:text-[74px] md:text-[96px] lg:text-[108px] xl:text-[124px] max-w-5xl">
               Make physical stores think in real time.
             </h1>
-            <p className="animate-fade-up delay-100 mt-8 max-w-2xl text-lg sm:text-xl text-spark-text-muted leading-relaxed">
+            <p className="animate-fade-up delay-100 mt-6 max-w-lg text-lg sm:text-xl text-spark-text-muted leading-relaxed">
               Online stores make decisions in real time. Your restaurant floor can too.
             </p>
-
-            <div className="animate-fade-up delay-200 mt-12 max-w-2xl space-y-4">
-              <Stair
-                label="Today"
-                body="Know what's happening on your floor the moment it happens."
-              />
-              <Stair
-                label="Next"
-                body="Act on it instantly — the way online stores already do."
-              />
-              <Stair
-                label="Tomorrow"
-                body="Hand those same calls off to robots."
-              />
-            </div>
-
-            <div className="animate-fade-up delay-300 mt-12 flex flex-wrap gap-3">
+            <div className="animate-fade-up delay-200 mt-10 flex flex-wrap gap-3">
               <a href="#cta" className="btn-spark-pill">
                 Talk to us
               </a>
@@ -48,9 +33,46 @@ export default function Home() {
               </a>
             </div>
           </div>
+        </div>
 
-          <div className="animate-fade-up delay-200 lg:max-w-[520px] lg:justify-self-end w-full">
-            <FloorPanel />
+        {/* Live floor events board — dark, full-width, no card */}
+        <div className="animate-fade-up delay-300 bg-spark-text">
+          <div className="max-w-7xl mx-auto px-6 sm:px-10">
+            <div className="flex items-center justify-between py-4 border-b border-white/10">
+              <div className="flex items-center gap-2.5">
+                <span className="live-dot" />
+                <span className="text-xs font-bold uppercase tracking-widest text-white/50">
+                  Live floor
+                </span>
+              </div>
+              <span className="text-xs font-bold uppercase tracking-widest text-white/30">
+                3 events
+              </span>
+            </div>
+            <HeroEvent
+              event="Table 7 has waited 4 min without service"
+              action="Ping Server A"
+              assignee="Maria"
+              role="Server"
+              status="dispatched"
+              time="12s ago"
+            />
+            <HeroEvent
+              event="Entrance queue increased to 12 customers"
+              action="Move Host B to front"
+              assignee="Jordan"
+              role="Host"
+              status="pending"
+              time="45s ago"
+            />
+            <HeroEvent
+              event="Zone C has no coverage for 8 min"
+              action="Send Server D to Zone C"
+              assignee="Alex"
+              role="Manager"
+              status="acknowledged"
+              time="1m ago"
+            />
           </div>
         </div>
       </section>
@@ -226,50 +248,7 @@ export default function Home() {
   );
 }
 
-function FloorPanel() {
-  return (
-    <div className="floor-panel">
-      <div className="flex items-center justify-between px-1 pb-2 border-b border-spark-border">
-        <div className="flex items-center gap-2.5">
-          <span className="live-dot" />
-          <span className="font-display text-base text-spark-text">
-            Live floor
-          </span>
-        </div>
-        <span className="text-xs font-semibold uppercase tracking-wider text-spark-text-subtle">
-          3 events
-        </span>
-      </div>
-
-      <FloorEvent
-        event="Table 7 has waited 4 min without service"
-        action="Ping Server A"
-        assignee="Maria"
-        role="Server"
-        status="dispatched"
-        time="12s ago"
-      />
-      <FloorEvent
-        event="Entrance queue increased to 12 customers"
-        action="Move Host B to front"
-        assignee="Jordan"
-        role="Host"
-        status="pending"
-        time="45s ago"
-      />
-      <FloorEvent
-        event="Zone C has no coverage for 8 min"
-        action="Send Server D to Zone C"
-        assignee="Alex"
-        role="Manager"
-        status="acknowledged"
-        time="1m ago"
-      />
-    </div>
-  );
-}
-
-function FloorEvent({
+function HeroEvent({
   event,
   action,
   assignee,
@@ -284,6 +263,12 @@ function FloorEvent({
   status: "dispatched" | "pending" | "acknowledged";
   time: string;
 }) {
+  const statusStyle = {
+    dispatched: "text-spark-lime",
+    pending: "text-[#ffd11a]",
+    acknowledged: "text-white/40",
+  }[status];
+
   const statusLabel = {
     dispatched: "Dispatched",
     pending: "Pending",
@@ -291,37 +276,21 @@ function FloorEvent({
   }[status];
 
   return (
-    <div className="floor-event">
-      <p className="text-[15px] font-semibold text-spark-text leading-snug">
-        {event}
-      </p>
-      <div className="floor-event-action">
-        <span aria-hidden>→</span>
-        <span>{action}</span>
+    <div className="py-5 border-b border-white/10 sm:grid sm:grid-cols-[1fr_auto] sm:gap-10 sm:items-center">
+      <div>
+        <p className="text-[15px] font-semibold text-white/90 leading-snug">
+          {event}
+        </p>
+        <p className="mt-2 text-sm font-bold text-spark-lime">→ {action}</p>
       </div>
-      <div className="floor-event-meta">
-        <span className="text-xs font-semibold text-spark-text-subtle">
-          {assignee}
-          <span className="text-spark-text-subtle/60"> · {role}</span>
+      <div className="hidden sm:flex sm:flex-col sm:items-end sm:gap-1 flex-shrink-0">
+        <span className="text-xs text-white/35">
+          {assignee} · {role}
         </span>
-        <span className={`floor-status floor-status-${status}`}>
-          <span className="floor-status-dot" />
+        <span className={`text-xs font-bold ${statusStyle}`}>
           {statusLabel} · {time}
         </span>
       </div>
-    </div>
-  );
-}
-
-function Stair({ label, body }: { label: string; body: string }) {
-  return (
-    <div className="grid sm:grid-cols-[120px_1fr] gap-1 sm:gap-6 items-baseline">
-      <span className="text-xs font-bold uppercase tracking-wider text-spark-dark">
-        {label}
-      </span>
-      <p className="text-base sm:text-lg text-spark-text-muted leading-relaxed">
-        {body}
-      </p>
     </div>
   );
 }
