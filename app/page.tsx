@@ -18,20 +18,20 @@ export default function Home() {
         <div className="max-w-7xl mx-auto grid gap-16 lg:grid-cols-[1.1fr_1fr] lg:gap-12 lg:items-center">
           <div>
             <h1 className="font-display text-spark-text text-[44px] sm:text-[68px] md:text-[84px] lg:text-[88px] xl:text-[104px]">
-              Make restaurants think in real time.
+              Physical experiences. E-commerce speed.
             </h1>
             <p className="mt-8 max-w-2xl text-lg sm:text-xl text-spark-text-muted leading-relaxed">
-              Your cameras, POS, and sensors already see everything. Now they talk to each other.
+              Online stores make decisions in real time. Your restaurant floor can too.
             </p>
 
             <div className="mt-12 max-w-2xl space-y-4">
               <Stair
                 label="Today"
-                body="See what's happening on your floor right now."
+                body="Know what's happening on your floor the moment it happens."
               />
               <Stair
                 label="Next"
-                body="Tell the right person what to do before the problem gets worse."
+                body="Act on it instantly — the way online stores already do."
               />
               <Stair
                 label="Tomorrow"
@@ -61,18 +61,18 @@ export default function Home() {
             The problem
           </p>
           <h2 className="font-display text-spark-text text-4xl sm:text-6xl md:text-7xl max-w-5xl">
-            Online stores know the moment something goes wrong. Restaurants find out the next day.
+            Online stores react in seconds. Physical experiences still find out the next day.
           </h2>
           <div className="mt-12 grid gap-8 md:grid-cols-2 md:gap-16">
             <p className="text-lg text-spark-text-muted leading-relaxed">
-              Online stores know the moment a customer gets frustrated — and they fix it instantly.
+              When something goes wrong in an online store, it triggers an alert, routes a fix, and gets measured — all before the next customer arrives.
             </p>
             <p className="text-lg text-spark-text-muted leading-relaxed">
-              Your cameras, POS, and scheduling tools don't talk to each other. Managers walk the floor guessing, read reports after the shift, and find out about problems too late.
+              When something goes wrong in a restaurant, the manager hears about it after the shift. Your cameras, POS, and staff aren't connected. Nothing talks. Nothing acts.
             </p>
           </div>
           <p className="mt-12 max-w-3xl font-display text-spark-text text-3xl sm:text-4xl">
-            Spark gives restaurants the same real-time awareness that online stores have had for years.
+            Spark closes that gap. Physical experiences with the decision speed of e-commerce.
           </p>
         </div>
       </section>
@@ -83,19 +83,19 @@ export default function Home() {
             How it works
           </p>
           <h2 className="font-display text-spark-text text-4xl sm:text-6xl md:text-7xl max-w-4xl">
-            Always know what's happening on your floor.
+            What online stores have had for years. Now for the floor.
           </h2>
           <p className="mt-8 max-w-3xl text-lg text-spark-text-muted leading-relaxed">
-            Spark reads your cameras, POS, and sensors together — and tells your team what to do.
+            Spark connects your cameras, POS, and sensors — and gives your team the same instant awareness that e-commerce teams already take for granted.
           </p>
 
           <div className="mt-16">
             <div className="border-t border-spark-border pt-8 pb-8 grid sm:grid-cols-[80px_1fr] gap-4 sm:gap-12 items-baseline">
               <span className="text-xs font-bold uppercase tracking-widest text-spark-text-subtle">01</span>
               <div>
-                <h3 className="font-display text-spark-text text-3xl sm:text-4xl md:text-5xl">Spot problems before guests notice.</h3>
+                <h3 className="font-display text-spark-text text-3xl sm:text-4xl md:text-5xl">Know the moment something goes wrong.</h3>
                 <p className="mt-4 text-lg text-spark-text-muted leading-relaxed max-w-2xl">
-                  Know when a table's been waiting too long, when the entrance is getting crowded, or when part of your floor needs more staff.
+                  A table waiting too long. An entrance getting crowded. A section with no coverage. Spark surfaces it while there's still time to act.
                 </p>
               </div>
             </div>
@@ -104,16 +104,16 @@ export default function Home() {
               <div>
                 <h3 className="font-display text-spark-text text-3xl sm:text-4xl md:text-5xl">See what's costing you guests.</h3>
                 <p className="mt-4 text-lg text-spark-text-muted leading-relaxed max-w-2xl">
-                  Find out which hours, which shifts, and which moments are where people stop coming back.
+                  Online stores run experiments to find what loses customers. Spark does the same for your shifts — which hours, which moments, which patterns drive people away.
                 </p>
               </div>
             </div>
             <div className="border-t border-spark-border border-b border-spark-border pt-8 pb-8 grid sm:grid-cols-[80px_1fr] gap-4 sm:gap-12 items-baseline">
               <span className="text-xs font-bold uppercase tracking-widest text-spark-text-subtle">03</span>
               <div>
-                <h3 className="font-display text-spark-text text-3xl sm:text-4xl md:text-5xl">Tell your team what to do.</h3>
+                <h3 className="font-display text-spark-text text-3xl sm:text-4xl md:text-5xl">Act on it immediately.</h3>
                 <p className="mt-4 text-lg text-spark-text-muted leading-relaxed max-w-2xl">
-                  The right message goes to the right person while there's still time to fix it.
+                  The right person gets the right call the moment it matters — not after the shift, not after the guest leaves.
                 </p>
               </div>
             </div>
@@ -130,7 +130,7 @@ export default function Home() {
             Built for the people who run the floor.
           </h2>
           <p className="mt-8 max-w-3xl text-lg text-spark-text-muted leading-relaxed">
-            Restaurants are the first AI-native physical experience — every shift is full of high-frequency decisions that shape whether guests come back.
+            Restaurants are the first AI-native physical experience — every shift is full of high-frequency decisions that shape whether guests come back. Every one of these is something an online store would handle automatically.
           </p>
 
           <div className="mt-16 space-y-4 sm:space-y-5 max-w-4xl">
@@ -142,7 +142,7 @@ export default function Home() {
           </div>
 
           <p className="mt-16 max-w-3xl font-display text-spark-text text-3xl sm:text-4xl md:text-5xl">
-            Your team can't fix what they can't see. Spark makes sure they always see it.
+            An online store would have fixed all of these before the next customer arrived.
           </p>
         </div>
       </section>
@@ -175,10 +175,10 @@ export default function Home() {
             Vision
           </p>
           <h2 className="font-display text-4xl sm:text-6xl md:text-7xl max-w-5xl text-white">
-            Today your team acts on it. Tomorrow, robots do.
+            Every physical experience runs like an online one.
           </h2>
           <p className="mt-12 max-w-3xl text-lg leading-relaxed text-white/80">
-            Today, Spark helps your managers see everything happening on the floor. Next, it helps your team act on it the moment it happens. And eventually, the same system will run the floor — with or without humans.
+            Restaurants are the start. The same gap between physical and digital exists in retail, hospitality, fitness, healthcare. Every physical experience deserves the decision speed that online businesses already have. Spark is how that happens — first with your team acting on it, eventually with robots doing it automatically.
           </p>
           <p className="mt-12 max-w-3xl font-display text-3xl sm:text-4xl md:text-5xl text-spark-lime">
             The worker changes. The brain stays the same.
@@ -192,13 +192,13 @@ export default function Home() {
       >
         <div className="max-w-5xl mx-auto text-center">
           <h2 className="font-display text-spark-dark text-4xl sm:text-6xl md:text-7xl">
-            Ready to run a smarter floor?
+            Give your locations the speed they deserve.
           </h2>
           <p
             className="mt-8 max-w-2xl mx-auto text-lg leading-relaxed"
             style={{ color: "var(--spark-dark-green)", opacity: 0.85 }}
           >
-            We're working with restaurant groups that want to stay ahead of every shift. If that's you, let's talk.
+            We're working with restaurant groups ready to run their floors the way online stores already run their sites. If that's you, let's talk.
           </p>
           <div className="mt-10 flex justify-center">
             <a
