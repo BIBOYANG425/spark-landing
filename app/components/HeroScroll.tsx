@@ -34,10 +34,10 @@ const fade = (p: number, start: number, end: number) => {
 // ── Generated Matisse image stage ──────────────────────────────────────────
 
 const HERO_IMAGES = [
-  { src: "/hero/hero-01-manifesto.png", alt: "" },
-  { src: "/hero/hero-02-now.png", alt: "" },
-  { src: "/hero/hero-03-next.png", alt: "" },
-  { src: "/hero/hero-04-future.png", alt: "" },
+  { src: "/hero/hero-01-manifesto.svg", alt: "" },
+  { src: "/hero/hero-02-now.svg", alt: "" },
+  { src: "/hero/hero-03-next.svg", alt: "" },
+  { src: "/hero/hero-04-future.svg", alt: "" },
 ];
 
 const imageOpacity = (progress: number, index: number, stops: number[]) => {
