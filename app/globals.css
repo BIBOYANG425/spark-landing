@@ -313,10 +313,100 @@ body {
   object-position: center center;
   transition: opacity 120ms linear;
   will-change: opacity, transform;
+  z-index: 0;
+}
+.hs-signal-overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  width: 100%;
+  height: 100%;
+  mix-blend-mode: screen;
+  pointer-events: none;
+  filter: drop-shadow(0 0 10px rgba(159,232,112,0.22));
+}
+.hs-signal-layer {
+  transition: opacity 160ms linear;
+}
+.hs-flow-line {
+  fill: none;
+  stroke: var(--spark-lime);
+  stroke-width: 3;
+  stroke-linecap: round;
+  stroke-dasharray: 10 18;
+  animation: hs-signal-flow 1.7s linear infinite;
+  opacity: 0.9;
+}
+.hs-flow-line.orange {
+  stroke: var(--warm);
+  filter: drop-shadow(0 0 8px rgba(234,90,46,0.28));
+}
+.hs-flow-line.lime {
+  stroke: var(--spark-lime);
+}
+.hs-flow-line.slow {
+  animation-duration: 2.5s;
+  opacity: 0.7;
+}
+.hs-flow-line.urgent {
+  animation-duration: 1.05s;
+  stroke-width: 3.5;
+}
+.hs-flow-line.delay-line {
+  animation-delay: -0.65s;
+}
+.hs-signal-node,
+.hs-decision-core {
+  fill: var(--spark-lime);
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: hs-node-pulse 1.7s cubic-bezier(0.25,1,0.5,1) infinite;
+  filter: drop-shadow(0 0 9px rgba(159,232,112,0.48));
+}
+.hs-signal-node.orange {
+  fill: var(--warm);
+}
+.hs-signal-node.delay-1,
+.hs-alert-ring.delay-1 {
+  animation-delay: -0.45s;
+}
+.hs-signal-node.delay-2,
+.hs-alert-ring.delay-2 {
+  animation-delay: -0.9s;
+}
+.hs-decision-core {
+  opacity: 0.88;
+  animation-duration: 1.35s;
+}
+.hs-decision-core.future {
+  animation-duration: 1.9s;
+}
+.hs-alert-ring {
+  fill: none;
+  stroke: var(--warm);
+  stroke-width: 3;
+  opacity: 0;
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: hs-alert-ping 1.6s cubic-bezier(0.16,1,0.3,1) infinite;
+  filter: drop-shadow(0 0 10px rgba(234,90,46,0.28));
+}
+@keyframes hs-signal-flow {
+  to { stroke-dashoffset: -56; }
+}
+@keyframes hs-node-pulse {
+  0%, 100% { transform: scale(0.92); opacity: 0.72; }
+  50% { transform: scale(1.28); opacity: 1; }
+}
+@keyframes hs-alert-ping {
+  0% { transform: scale(0.72); opacity: 0; }
+  18% { opacity: 0.92; }
+  100% { transform: scale(1.55); opacity: 0; }
 }
 .hs-image-scrim {
   position: absolute;
   inset: 0;
+  z-index: 2;
   background:
     linear-gradient(90deg, rgba(14,15,12,0.84) 0%, rgba(14,15,12,0.58) 28%, rgba(14,15,12,0.16) 58%, rgba(14,15,12,0.24) 100%),
     linear-gradient(180deg, rgba(14,15,12,0.26) 0%, rgba(14,15,12,0.02) 42%, rgba(14,15,12,0.34) 100%);
@@ -352,6 +442,9 @@ body {
   .hs-image-plate {
     object-position: 58% center;
   }
+  .hs-signal-overlay {
+    opacity: 0.68;
+  }
   .hs-image-scrim {
     background:
       linear-gradient(180deg, rgba(14,15,12,0.72) 0%, rgba(14,15,12,0.18) 42%, rgba(14,15,12,0.78) 100%),
@@ -360,9 +453,13 @@ body {
 }
 @media (prefers-reduced-motion: reduce) {
   .hs-image-stage,
-  .hs-image-plate {
+  .hs-image-plate,
+  .hs-signal-layer {
     transition: opacity 180ms linear;
     will-change: opacity;
+  }
+  .hs-signal-overlay {
+    display: none;
   }
 }
 .hs-content {

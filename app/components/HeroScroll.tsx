@@ -86,8 +86,60 @@ function HeroImageStage({
           />
         );
       })}
+      <HeroSignalOverlay progress={progress} prefersReducedMotion={prefersReducedMotion} />
       <div className="hs-image-scrim" />
     </div>
+  );
+}
+
+function HeroSignalOverlay({
+  progress,
+  prefersReducedMotion,
+}: {
+  progress: number;
+  prefersReducedMotion: boolean;
+}) {
+  if (prefersReducedMotion) return null;
+
+  const introOpacity = fade(progress, -0.01, 0.22) * 0.7;
+  const nowOpacity = fade(progress, 0.26, 0.49);
+  const nextOpacity = fade(progress, 0.51, 0.74);
+  const futureOpacity = fade(progress, 0.76, 1.05);
+
+  return (
+    <svg className="hs-signal-overlay" viewBox="0 0 1200 800" preserveAspectRatio="xMidYMid slice" aria-hidden>
+      <g className="hs-signal-layer intro" style={{ opacity: introOpacity }}>
+        <path className="hs-flow-line lime slow" d="M 132 402 C 270 390, 376 376, 506 304 S 762 226, 1034 284" />
+        <path className="hs-flow-line orange" d="M 180 476 C 366 420, 514 448, 668 392 S 930 284, 1116 330" />
+        <circle className="hs-signal-node lime" cx="510" cy="304" r="5" />
+        <circle className="hs-signal-node orange delay-1" cx="668" cy="392" r="6" />
+        <circle className="hs-signal-node lime delay-2" cx="1034" cy="284" r="5" />
+      </g>
+
+      <g className="hs-signal-layer now" style={{ opacity: nowOpacity }}>
+        <circle className="hs-alert-ring" cx="430" cy="396" r="28" />
+        <circle className="hs-alert-ring delay-1" cx="624" cy="458" r="34" />
+        <circle className="hs-alert-ring delay-2" cx="846" cy="378" r="24" />
+        <path className="hs-flow-line orange urgent" d="M 296 436 C 416 404, 530 434, 648 466 S 850 472, 1014 410" />
+      </g>
+
+      <g className="hs-signal-layer next" style={{ opacity: nextOpacity }}>
+        <path className="hs-flow-line lime" d="M 388 278 C 512 258, 604 324, 658 410 S 786 526, 948 474" />
+        <path className="hs-flow-line lime delay-line" d="M 234 492 C 386 488, 502 448, 626 382 S 880 260, 1084 306" />
+        <path className="hs-flow-line orange slow" d="M 288 356 C 442 356, 548 378, 656 410" />
+        <circle className="hs-decision-core" cx="656" cy="410" r="18" />
+        <circle className="hs-signal-node lime delay-1" cx="948" cy="474" r="7" />
+        <circle className="hs-signal-node lime delay-2" cx="1084" cy="306" r="7" />
+      </g>
+
+      <g className="hs-signal-layer future" style={{ opacity: futureOpacity }}>
+        <path className="hs-flow-line lime" d="M 642 142 C 690 246, 736 326, 806 426 S 910 556, 1010 608" />
+        <path className="hs-flow-line lime slow delay-line" d="M 642 142 C 760 178, 890 210, 1034 320 S 1104 510, 1130 688" />
+        <circle className="hs-decision-core future" cx="642" cy="142" r="16" />
+        <circle className="hs-signal-node lime delay-1" cx="806" cy="426" r="7" />
+        <circle className="hs-signal-node lime delay-2" cx="1010" cy="608" r="8" />
+      </g>
+    </svg>
   );
 }
 
