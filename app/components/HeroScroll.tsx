@@ -1,4 +1,5 @@
 "use client";
+import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 
 // ── Math utilities ─────────────────────────────────────────────────────────
@@ -30,139 +31,113 @@ const fade = (p: number, start: number, end: number) => {
   return 0;
 };
 
-// ── Matisse SVG primitives ─────────────────────────────────────────────────
+// ── Generated Matisse image stage ──────────────────────────────────────────
 
-function Leaf({ x, y, rotate = 0, scale = 1, fill, opacity = 1 }: {
-  x: number; y: number; rotate?: number; scale?: number; fill: string; opacity?: number;
+const HERO_IMAGES = [
+  { src: "/hero/hero-01-manifesto.svg", alt: "" },
+  { src: "/hero/hero-02-now.svg", alt: "" },
+  { src: "/hero/hero-03-next.svg", alt: "" },
+  { src: "/hero/hero-04-future.svg", alt: "" },
+];
+
+const imageOpacity = (progress: number, index: number, stops: number[]) => {
+  const start = stops[index];
+  const end = stops[index + 1] ?? 1;
+  const inOpacity = index === 0 ? 1 : clamp01((progress - (start - 0.06)) / 0.12);
+  const outOpacity = index === HERO_IMAGES.length - 1 ? 1 : 1 - clamp01((progress - (end - 0.06)) / 0.12);
+  return clamp01(inOpacity * outOpacity);
+};
+
+function HeroImageStage({
+  progress,
+  artVisible,
+  prefersReducedMotion,
+  stops,
+}: {
+  progress: number;
+  artVisible: number;
+  prefersReducedMotion: boolean;
+  stops: number[];
 }) {
   return (
-    <g transform={`translate(${x},${y}) rotate(${rotate}) scale(${scale})`} opacity={opacity}>
-      <path d="M0,0 C 20,-40 70,-50 90,-20 C 102,4 80,40 40,46 C 8,50 -10,30 0,0 Z" fill={fill} />
-    </g>
+    <div className="hs-image-stage" aria-hidden style={{ opacity: artVisible }}>
+      {HERO_IMAGES.map((image, index) => {
+        const start = stops[index];
+        const end = stops[index + 1] ?? 1;
+        const localProgress = easeInOut(clamp01((progress - start) / (end - start)));
+        const opacity = imageOpacity(progress, index, stops);
+        const baseScale = index === 0 ? 1.015 : 1.03;
+        const scale = prefersReducedMotion ? 1 : lerp(baseScale, baseScale + 0.045, localProgress);
+        const y = prefersReducedMotion ? 0 : lerp(8, -12, localProgress);
+
+        return (
+          <Image
+            key={image.src}
+            src={image.src}
+            alt={image.alt}
+            fill
+            priority={index === 0}
+            sizes="100vw"
+            className="hs-image-plate"
+            style={{
+              opacity,
+              transform: `translate3d(0, ${y}px, 0) scale(${scale})`,
+            }}
+          />
+        );
+      })}
+      <HeroSignalOverlay progress={progress} prefersReducedMotion={prefersReducedMotion} />
+      <div className="hs-image-scrim" />
+    </div>
   );
 }
 
-function HumanFigure({ x, y, scale = 1, opacity = 1, color = "#0e0f0c" }: {
-  x: number; y: number; scale?: number; opacity?: number; color?: string;
+function HeroSignalOverlay({
+  progress,
+  prefersReducedMotion,
+}: {
+  progress: number;
+  prefersReducedMotion: boolean;
 }) {
-  return (
-    <g transform={`translate(${x},${y}) scale(${scale})`} opacity={opacity}>
-      <ellipse cx="0" cy="-78" rx="22" ry="26" fill={color} />
-      <path d="M -28 -50 C -32 -30, -38 0, -30 30 C -22 50, 22 50, 30 30 C 38 0, 32 -30, 28 -50 C 18 -56, -18 -56, -28 -50 Z" fill={color} />
-      <path d="M 26 -30 C 50 -20, 60 0, 56 22 C 52 30, 44 28, 42 18 C 40 4, 32 -10, 22 -16 Z" fill={color} />
-      <path d="M -16 30 C -22 50, -22 90, -18 110 C -14 116, -6 112, -6 100 C -6 80, -10 50, -10 36 Z" fill={color} />
-      <path d="M 10 30 C 8 50, 14 90, 18 108 C 22 116, 28 112, 26 100 C 24 80, 22 50, 22 34 Z" fill={color} />
-    </g>
-  );
-}
+  if (prefersReducedMotion) return null;
 
-function RobotFigure({ x, y, scale = 1, opacity = 1, color = "#0e0f0c", accent = "#9fe870" }: {
-  x: number; y: number; scale?: number; opacity?: number; color?: string; accent?: string;
-}) {
-  return (
-    <g transform={`translate(${x},${y}) scale(${scale})`} opacity={opacity}>
-      <path d="M -22 -100 C -22 -110, -16 -114, -8 -114 L 8 -114 C 16 -114, 22 -110, 22 -100 L 22 -70 C 22 -64, 18 -60, 12 -60 L -12 -60 C -18 -60, -22 -64, -22 -70 Z" fill={color} />
-      <rect x="-14" y="-92" width="28" height="6" rx="3" fill={accent} />
-      <rect x="-6" y="-60" width="12" height="6" fill={color} />
-      <path d="M -30 -54 L 30 -54 L 34 28 C 34 38, 28 42, 20 42 L -20 42 C -28 42, -34 38, -34 28 Z" fill={color} />
-      <circle cx="0" cy="-20" r="6" fill={accent} />
-      <path d="M 30 -50 C 46 -42, 56 -20, 54 4 C 52 12, 44 12, 40 4 C 36 -14, 30 -28, 24 -38 Z" fill={color} />
-      <path d="M -30 -50 C -46 -42, -56 -20, -54 4 C -52 12, -44 12, -40 4 C -36 -14, -30 -28, -24 -38 Z" fill={color} />
-      <rect x="-20" y="42" width="14" height="68" rx="3" fill={color} />
-      <rect x="6" y="42" width="14" height="68" rx="3" fill={color} />
-    </g>
-  );
-}
-
-function FloorTable({ x, y, w = 64, h = 24, fill = "#ea5a2e", accent = "#0e0f0c", opacity = 1 }: {
-  x: number; y: number; w?: number; h?: number; fill?: string; accent?: string; opacity?: number;
-}) {
-  return (
-    <g opacity={opacity}>
-      <ellipse cx={x} cy={y} rx={w / 2} ry={h / 2} fill={fill} />
-      <circle cx={x - w / 2 - 8} cy={y} r="6" fill={accent} />
-      <circle cx={x + w / 2 + 8} cy={y} r="6" fill={accent} />
-    </g>
-  );
-}
-
-function SignalArc({ from, to, color, opacity = 1, dash = 0 }: {
-  from: { x: number; y: number };
-  to: { x: number; y: number };
-  color: string;
-  opacity?: number;
-  dash?: number;
-}) {
-  const midX = (from.x + to.x) / 2;
-  const midY = Math.min(from.y, to.y) - 80;
-  const d = `M ${from.x} ${from.y} Q ${midX} ${midY} ${to.x} ${to.y}`;
-  return (
-    <path d={d} stroke={color} strokeWidth="3.5" fill="none" opacity={opacity}
-      strokeDasharray="6 10" strokeDashoffset={dash} strokeLinecap="round" />
-  );
-}
-
-// ── Matisse animated stage ─────────────────────────────────────────────────
-
-function MatisseStage({ progress, artVisible }: { progress: number; artVisible: number }) {
-  const brainOpacity = fade(progress, 0.45, 1.1);
-  const brainScale = lerp(0.55, 1.1, easeInOut(clamp01((progress - 0.35) / 0.55)));
-  const brainPulse = 1 + Math.sin(progress * Math.PI * 6) * 0.025;
-
-  const humanOpacity = fade(progress, 0.2, 1.1);
-  const humanX = lerp(360, 480, easeInOut(clamp01((progress - 0.2) / 0.7)));
-
-  const robotOpacity = fade(progress, 0.72, 1.1);
-  const robotScale = lerp(0.7, 1, easeInOut(clamp01((progress - 0.72) / 0.2)));
-
-  const floorOpacity = fade(progress, 0.2, 1.1);
-  const tablesOpacity = fade(progress, 0.22, 1.1);
-  const signalOpacity = clamp01((progress - 0.5) / 0.15);
-  const robotSignalOpacity = robotOpacity * 0.95;
-  const dashOffset = -(progress * 240) % 16;
-  const leavesOpacity = fade(progress, 0.18, 1.1);
+  const introOpacity = fade(progress, -0.01, 0.22) * 0.7;
+  const nowOpacity = fade(progress, 0.26, 0.49);
+  const nextOpacity = fade(progress, 0.51, 0.74);
+  const futureOpacity = fade(progress, 0.76, 1.05);
 
   return (
-    <svg viewBox="0 0 1200 800" preserveAspectRatio="xMidYMid slice"
-      style={{ position: "absolute", inset: 0, width: "100%", height: "100%", opacity: artVisible, transition: "opacity 500ms ease" }}>
-      <g opacity={leavesOpacity * 0.18}>
-        <Leaf x={-40} y={120} rotate={-25} scale={2.6} fill="#163300" />
-        <Leaf x={1020} y={620} rotate={155} scale={2.0} fill="#163300" />
+    <svg className="hs-signal-overlay" viewBox="0 0 1200 800" preserveAspectRatio="xMidYMid slice" aria-hidden>
+      <g className="hs-signal-layer intro" style={{ opacity: introOpacity }}>
+        <path className="hs-flow-line lime slow" d="M 132 402 C 270 390, 376 376, 506 304 S 762 226, 1034 284" />
+        <path className="hs-flow-line orange" d="M 180 476 C 366 420, 514 448, 668 392 S 930 284, 1116 330" />
+        <circle className="hs-signal-node lime" cx="510" cy="304" r="5" />
+        <circle className="hs-signal-node orange delay-1" cx="668" cy="392" r="6" />
+        <circle className="hs-signal-node lime delay-2" cx="1034" cy="284" r="5" />
       </g>
-      <path
-        d="M 0 640 C 200 600, 380 660, 580 630 C 760 600, 900 660, 1080 620 C 1140 605, 1200 615, 1200 615 L 1200 800 L 0 800 Z"
-        fill={progress < 0.78 ? "#163300" : "#0a1208"}
-        opacity={floorOpacity * 0.94}
-      />
-      <g opacity={tablesOpacity}>
-        <FloorTable x={200} y={700} w={70} h={26} fill="#ea5a2e" accent="#0e0f0c" />
-        <FloorTable x={380} y={730} w={56} h={22} fill="#9fe870" accent="#0e0f0c" />
-        <FloorTable x={760} y={710} w={66} h={24} fill="#ea5a2e" accent="#0e0f0c" />
-        <FloorTable x={960} y={740} w={50} h={20} fill="#9fe870" accent="#0e0f0c" />
+
+      <g className="hs-signal-layer now" style={{ opacity: nowOpacity }}>
+        <circle className="hs-alert-ring" cx="430" cy="396" r="28" />
+        <circle className="hs-alert-ring delay-1" cx="624" cy="458" r="34" />
+        <circle className="hs-alert-ring delay-2" cx="846" cy="378" r="24" />
+        <path className="hs-flow-line orange urgent" d="M 296 436 C 416 404, 530 434, 648 466 S 850 472, 1014 410" />
       </g>
-      <g opacity={leavesOpacity}>
-        <Leaf x={120} y={260} rotate={-15} scale={1.4} fill="#9fe870" opacity={0.75} />
-        <Leaf x={980} y={180} rotate={180} scale={1.1} fill="#ea5a2e" opacity={0.85} />
-        <Leaf x={1060} y={420} rotate={120} scale={1.6} fill="#9fe870" opacity={0.55} />
+
+      <g className="hs-signal-layer next" style={{ opacity: nextOpacity }}>
+        <path className="hs-flow-line lime" d="M 388 278 C 512 258, 604 324, 658 410 S 786 526, 948 474" />
+        <path className="hs-flow-line lime delay-line" d="M 234 492 C 386 488, 502 448, 626 382 S 880 260, 1084 306" />
+        <path className="hs-flow-line orange slow" d="M 288 356 C 442 356, 548 378, 656 410" />
+        <circle className="hs-decision-core" cx="656" cy="410" r="18" />
+        <circle className="hs-signal-node lime delay-1" cx="948" cy="474" r="7" />
+        <circle className="hs-signal-node lime delay-2" cx="1084" cy="306" r="7" />
       </g>
-      <g transform={`translate(660 240) scale(${brainScale * brainPulse})`} opacity={brainOpacity}>
-        <path d="M 0 -100 C 80 -110, 140 -50, 130 30 C 124 90, 60 130, -20 120 C -100 110, -140 50, -130 -30 C -120 -90, -60 -110, 0 -100 Z" fill="#9fe870" />
-        <path d="M -10 -50 C 30 -56, 60 -30, 56 10 C 54 38, 30 56, -10 54 C -44 50, -60 26, -56 -10 C -52 -38, -36 -52, -10 -50 Z" fill="#163300" opacity={0.85} />
-        <circle cx="14" cy="-14" r="10" fill="#9fe870" />
-      </g>
-      <HumanFigure x={humanX} y={620} scale={1.05} opacity={humanOpacity} color="#0e0f0c" />
-      <RobotFigure x={780} y={620} scale={robotScale} opacity={robotOpacity} color="#0e0f0c" accent="#9fe870" />
-      <g opacity={signalOpacity}>
-        <SignalArc from={{ x: 660, y: 280 }} to={{ x: humanX, y: 550 }} color="#ea5a2e" dash={dashOffset} />
-        <SignalArc from={{ x: 660, y: 280 }} to={{ x: 200, y: 690 }} color="#ea5a2e" opacity={0.65} dash={dashOffset + 6} />
-        <SignalArc from={{ x: 660, y: 280 }} to={{ x: 760, y: 700 }} color="#ea5a2e" opacity={0.65} dash={dashOffset + 12} />
-      </g>
-      <g opacity={robotSignalOpacity}>
-        <SignalArc from={{ x: 660, y: 280 }} to={{ x: 780, y: 550 }} color="#9fe870" dash={dashOffset + 4} />
-      </g>
-      <g opacity={leavesOpacity * 0.9}>
-        <Leaf x={60} y={560} rotate={-40} scale={1.8} fill="#163300" />
-        <Leaf x={1080} y={560} rotate={140} scale={1.6} fill="#163300" />
+
+      <g className="hs-signal-layer future" style={{ opacity: futureOpacity }}>
+        <path className="hs-flow-line lime" d="M 642 142 C 690 246, 736 326, 806 426 S 910 556, 1010 608" />
+        <path className="hs-flow-line lime slow delay-line" d="M 642 142 C 760 178, 890 210, 1034 320 S 1104 510, 1130 688" />
+        <circle className="hs-decision-core future" cx="642" cy="142" r="16" />
+        <circle className="hs-signal-node lime delay-1" cx="806" cy="426" r="7" />
+        <circle className="hs-signal-node lime delay-2" cx="1010" cy="608" r="8" />
       </g>
     </svg>
   );
@@ -210,9 +185,15 @@ const HERO_PHASES = [
 function ManifestoHeadline({ opacity }: { opacity: number }) {
   return (
     <div className="hs-manifesto" style={{ opacity }}>
-      <h1 className="font-display hs-mh">
+      <h1 className="font-display hs-mh hs-mh-desktop">
         <span className="hs-mh-line">Give physical stores</span>
         <span className="hs-mh-line">the decision speed of</span>
+        <span className="hs-mh-line" style={{ color: "#9fe870" }}>e-commerce.</span>
+      </h1>
+      <h1 className="font-display hs-mh hs-mh-mobile">
+        <span className="hs-mh-line">Give physical</span>
+        <span className="hs-mh-line">stores the</span>
+        <span className="hs-mh-line">decision speed of</span>
         <span className="hs-mh-line" style={{ color: "#9fe870" }}>e-commerce.</span>
       </h1>
       <div className="hs-mh-cta">
@@ -225,11 +206,6 @@ function ManifestoHeadline({ opacity }: { opacity: number }) {
         <span className="hs-mh-hint">
           <span className="hs-arrow-down">↓</span> Scroll to see how
         </span>
-      </div>
-      <div className="hs-mh-stamp">
-        <span><em>Live</em> in 32 stores · regional hotpot chain · China</span>
-        <span>·</span>
-        <span>YC S26 applicant</span>
       </div>
     </div>
   );
@@ -261,6 +237,7 @@ function PhaseCaption({ phase, opacity, onDark }: {
 export function HeroScroll() {
   const ref = useRef<HTMLElement>(null);
   const [progress, setProgress] = useState(0);
+  const [prefersReducedMotion, setPrefersReducedMotion] = useState(false);
 
   useEffect(() => {
     const onScroll = () => {
@@ -276,6 +253,15 @@ export function HeroScroll() {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
+  useEffect(() => {
+    const mediaQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
+    const syncPreference = () => setPrefersReducedMotion(mediaQuery.matches);
+
+    syncPreference();
+    mediaQuery.addEventListener("change", syncPreference);
+    return () => mediaQuery.removeEventListener("change", syncPreference);
+  }, []);
+
   const pStops = [0, 0.25, 0.5, 0.75, 1.0];
   const phaseIx = progress < pStops[1] ? 0 : progress < pStops[2] ? 1 : progress < pStops[3] ? 2 : 3;
 
@@ -285,7 +271,7 @@ export function HeroScroll() {
   const t = clamp01((progress - phaseStart) / (phaseEnd - phaseStart));
   const bgColor = lerpColor(phase.bg.from, phase.bg.to, easeInOut(t));
 
-  const artVisible = clamp01((progress - 0.22) / 0.08);
+  const artVisible = 1;
 
   const manifestoOp = fade(progress, -0.01, 0.2);
   const captionOps = [
@@ -297,12 +283,17 @@ export function HeroScroll() {
 
   const match = bgColor.match(/rgb\((\d+)/);
   const lum = match ? parseInt(match[1]) : 245;
-  const onDark = lum < 90;
+  const onDark = phase.onDark || lum < 90;
 
   return (
     <section ref={ref} className="hero-scroll">
       <div className="hero-scroll-sticky" style={{ background: bgColor, transition: "background 80ms linear" }}>
-        <MatisseStage progress={progress} artVisible={artVisible} />
+        <HeroImageStage
+          progress={progress}
+          artVisible={artVisible}
+          prefersReducedMotion={prefersReducedMotion}
+          stops={pStops}
+        />
 
         <div className="hs-vignette" aria-hidden style={{
           background: onDark

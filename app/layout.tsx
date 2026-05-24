@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Epilogue, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 
@@ -18,6 +18,11 @@ export const metadata: Metadata = {
   title: "Spark — The decision speed of e-commerce, for physical stores.",
   description:
     "Spark connects cameras, POS, and sensors into a live decision layer for restaurants — so problems on the floor get caught, routed, and resolved in seconds, not after the shift.",
+};
+
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
 };
 
 export default function RootLayout({
