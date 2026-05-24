@@ -1,3 +1,5 @@
+import { ScrollStory } from "./components/ScrollStory";
+
 export default function Home() {
   return (
     <>
@@ -16,7 +18,7 @@ export default function Home() {
 
       <section className="w-full">
         {/* Headline zone */}
-        <div className="px-6 sm:px-10 pt-8 sm:pt-12 pb-10 sm:pb-14">
+        <div className="px-6 sm:px-10 pt-8 sm:pt-12 pb-24 sm:pb-32">
           <div className="max-w-7xl mx-auto">
             <h1 className="animate-fade-up font-display text-spark-text text-[48px] sm:text-[74px] md:text-[96px] lg:text-[108px] xl:text-[124px] max-w-5xl">
               Make physical stores think in real time.
@@ -35,47 +37,9 @@ export default function Home() {
           </div>
         </div>
 
-        {/* Live floor events board — dark, full-width, no card */}
-        <div className="animate-fade-up delay-300 bg-spark-text">
-          <div className="max-w-7xl mx-auto px-6 sm:px-10">
-            <div className="flex items-center justify-between py-4 border-b border-white/10">
-              <div className="flex items-center gap-2.5">
-                <span className="live-dot" />
-                <span className="text-xs font-bold uppercase tracking-widest text-white/50">
-                  Live floor
-                </span>
-              </div>
-              <span className="text-xs font-bold uppercase tracking-widest text-white/30">
-                3 events
-              </span>
-            </div>
-            <HeroEvent
-              event="Table 7 has waited 4 min without service"
-              action="Ping Server A"
-              assignee="Maria"
-              role="Server"
-              status="dispatched"
-              time="12s ago"
-            />
-            <HeroEvent
-              event="Entrance queue increased to 12 customers"
-              action="Move Host B to front"
-              assignee="Jordan"
-              role="Host"
-              status="pending"
-              time="45s ago"
-            />
-            <HeroEvent
-              event="Zone C has no coverage for 8 min"
-              action="Send Server D to Zone C"
-              assignee="Alex"
-              role="Manager"
-              status="acknowledged"
-              time="1m ago"
-            />
-          </div>
-        </div>
       </section>
+
+      <ScrollStory />
 
       <section className="w-full px-6 sm:px-10 py-24 sm:py-32 bg-spark-surface">
         <div className="max-w-7xl mx-auto">
@@ -248,52 +212,6 @@ export default function Home() {
   );
 }
 
-function HeroEvent({
-  event,
-  action,
-  assignee,
-  role,
-  status,
-  time,
-}: {
-  event: string;
-  action: string;
-  assignee: string;
-  role: string;
-  status: "dispatched" | "pending" | "acknowledged";
-  time: string;
-}) {
-  const statusStyle = {
-    dispatched: "text-spark-lime",
-    pending: "text-[#ffd11a]",
-    acknowledged: "text-white/40",
-  }[status];
-
-  const statusLabel = {
-    dispatched: "Dispatched",
-    pending: "Pending",
-    acknowledged: "Acknowledged",
-  }[status];
-
-  return (
-    <div className="py-5 border-b border-white/10 sm:grid sm:grid-cols-[1fr_auto] sm:gap-10 sm:items-center">
-      <div>
-        <p className="text-[15px] font-semibold text-white/90 leading-snug">
-          {event}
-        </p>
-        <p className="mt-2 text-sm font-bold text-spark-lime">→ {action}</p>
-      </div>
-      <div className="hidden sm:flex sm:flex-col sm:items-end sm:gap-1 flex-shrink-0">
-        <span className="text-xs text-white/35">
-          {assignee} · {role}
-        </span>
-        <span className={`text-xs font-bold ${statusStyle}`}>
-          {statusLabel} · {time}
-        </span>
-      </div>
-    </div>
-  );
-}
 
 function UseCaseLine({ text }: { text: string }) {
   return (
