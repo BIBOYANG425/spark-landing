@@ -21,7 +21,7 @@ export default function Home() {
               Make restaurants think in real time.
             </h1>
             <p className="mt-8 max-w-2xl text-lg sm:text-xl text-spark-text-muted leading-relaxed">
-              Spark turns cameras, POS, sensors, and store activity into a live decision layer for restaurants and physical stores.
+              Cameras, POS, sensors — turned into a live decision layer for the store floor.
             </p>
 
             <div className="mt-12 max-w-2xl space-y-4">
@@ -89,19 +89,34 @@ export default function Home() {
             Spark connects the signals already inside your store and turns them into operational decisions.
           </p>
 
-          <div className="mt-16 grid gap-6 md:grid-cols-3">
-            <Capability
-              title="Catch service breakdowns"
-              body="Detect unattended tables, long dwell times, queue spikes, and under-covered zones."
-            />
-            <Capability
-              title="Find revenue leaks"
-              body="See which time slots, staff patterns, and service moments hurt conversion or customer experience."
-            />
-            <Capability
-              title="Route the next action"
-              body="Send the right task to the right server, manager, or future robot while the issue is still happening."
-            />
+          <div className="mt-16">
+            <div className="border-t border-spark-border pt-8 pb-8 grid sm:grid-cols-[80px_1fr] gap-4 sm:gap-12 items-baseline">
+              <span className="text-xs font-bold uppercase tracking-widest text-spark-text-subtle">01</span>
+              <div>
+                <h3 className="font-display text-spark-text text-3xl sm:text-4xl md:text-5xl">Catch service breakdowns</h3>
+                <p className="mt-4 text-lg text-spark-text-muted leading-relaxed max-w-2xl">
+                  Detect unattended tables, long dwell times, queue spikes, and under-covered zones.
+                </p>
+              </div>
+            </div>
+            <div className="border-t border-spark-border pt-8 pb-8 grid sm:grid-cols-[80px_1fr] gap-4 sm:gap-12 items-baseline">
+              <span className="text-xs font-bold uppercase tracking-widest text-spark-text-subtle">02</span>
+              <div>
+                <h3 className="font-display text-spark-text text-3xl sm:text-4xl md:text-5xl">Find revenue leaks</h3>
+                <p className="mt-4 text-lg text-spark-text-muted leading-relaxed max-w-2xl">
+                  See which time slots, staff patterns, and service moments hurt conversion or customer experience.
+                </p>
+              </div>
+            </div>
+            <div className="border-t border-spark-border border-b border-spark-border pt-8 pb-8 grid sm:grid-cols-[80px_1fr] gap-4 sm:gap-12 items-baseline">
+              <span className="text-xs font-bold uppercase tracking-widest text-spark-text-subtle">03</span>
+              <div>
+                <h3 className="font-display text-spark-text text-3xl sm:text-4xl md:text-5xl">Route the next action</h3>
+                <p className="mt-4 text-lg text-spark-text-muted leading-relaxed max-w-2xl">
+                  Send the right task to the right server, manager, or future robot while the issue is still happening.
+                </p>
+              </div>
+            </div>
           </div>
         </div>
       </section>
@@ -311,16 +326,6 @@ function Stair({ label, body }: { label: string; body: string }) {
   );
 }
 
-function Capability({ title, body }: { title: string; body: string }) {
-  return (
-    <div className="spark-card">
-      <h3 className="font-display text-2xl text-spark-text">{title}</h3>
-      <p className="mt-4 text-base text-spark-text-muted leading-relaxed">
-        {body}
-      </p>
-    </div>
-  );
-}
 
 function UseCaseLine({ text }: { text: string }) {
   return (
